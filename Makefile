@@ -118,12 +118,14 @@
 ##	RS/6000 AIX Unix version 4, GNU GCC version cygnus-2.7-96q4
 ##	Windows NT version 4.0, Cygnus CygWin/32 beta 19
 ##
+ROOT = $(shell pwd)
+
 CC = clang
 CXX = clang++
-OFLAGS = -O3 -Wall -march=native -g
-MFLAGS = `./sysprobe -flags`
-MLIBS  = `./sysprobe -libs` -lm -lz
-ENDIAN = `./sysprobe -s`
+OFLAGS = -O3 -Wall -march=native -g -fuse-ld=lld
+MFLAGS = `$(ROOT)/./sysprobe -flags`
+MLIBS  = `$(ROOT)/./sysprobe -libs` -lm -lz
+ENDIAN = `$(ROOT)/./sysprobe -s`
 MAKE = make
 AR = ar qcv
 AROPT =

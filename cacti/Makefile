@@ -23,7 +23,7 @@ libcacti.$(LEXT):	$(OBJ)
 	$(RANLIB) libcacti.$(LEXT)
 
 .c.$(OEXT):
-	$(CC) $(CFLAGS) -c $*.c
+	$(CC) -march=native -O3 $(CFLAGS) -c $*.c
 
 filelist:
 	@echo $(SRC) $(HDR) Makefile
