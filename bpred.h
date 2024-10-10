@@ -262,7 +262,7 @@ bpred_create(enum bpred_class klass,	/* type of predictor to create */
 	     unsigned int l2size,	/* level-2 table size */
 	     unsigned int meta_size,	/* meta predictor table size */
 	     unsigned int shift_width,	/* history register width */
-	     unsigned int xor,		/* history xor address flag */
+	     unsigned int xor_,		/* history xor address flag */
 	     unsigned int btb_sets,	/* number of sets in BTB */
 	     unsigned int btb_assoc,	/* BTB associativity */
 	     unsigned int retstack_size);/* num entries in ret-addr stack */
@@ -274,7 +274,7 @@ bpred_dir_create (
   unsigned int l1size,		/* level-1 table size */
   unsigned int l2size,		/* level-2 table size (if relevant) */
   unsigned int shift_width,	/* history register width */
-  unsigned int xor);	   	/* history xor address flag */
+  unsigned int xor_);	   	/* history xor address flag */
 
 /* print branch predictor configuration */
 void
