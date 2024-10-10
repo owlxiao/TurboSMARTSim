@@ -113,7 +113,7 @@ bpred_create(enum bpred_class klass,    /* type of predictor to create */
              unsigned int l2size,       /* 2lev l2 table size */
              unsigned int meta_size,    /* meta table size */
              unsigned int shift_width,  /* history register width */
-             unsigned int xor,          /* history xor address flag */
+             unsigned int xor_,          /* history xor address flag */
              unsigned int btb_sets,     /* number of sets in BTB */
              unsigned int btb_assoc,    /* BTB associativity */
              unsigned int retstack_size) /* num entries in ret-addr stack */
@@ -133,7 +133,7 @@ bpred_create(enum bpred_class klass,    /* type of predictor to create */
 
     /* 2-level component */
     pred->dirpred.twolev =
-      bpred_dir_create(BPred2Level, l1size, l2size, shift_width, xor);
+      bpred_dir_create(BPred2Level, l1size, l2size, shift_width, xor_);
 
     /* metapredictor component */
     pred->dirpred.meta =
@@ -143,7 +143,7 @@ bpred_create(enum bpred_class klass,    /* type of predictor to create */
 
   case BPred2Level:
     pred->dirpred.twolev =
-      bpred_dir_create(klass, l1size, l2size, shift_width, xor);
+      bpred_dir_create(klass, l1size, l2size, shift_width, xor_);
 
     break;
 
@@ -226,7 +226,7 @@ bpred_dir_create (
   unsigned int l1size,          /* level-1 table size */
   unsigned int l2size,          /* level-2 table size (if relevant) */
   unsigned int shift_width,     /* history register width */
-  unsigned int xor)             /* history xor address flag */
+  unsigned int xor_)             /* history xor address flag */
 {
   struct bpred_dir_t *pred_dir;
   unsigned int cnt;
@@ -257,7 +257,7 @@ bpred_dir_create (
       pred_dir->config.two.shift_width = shift_width;
       pred_dir->config.two.shift_mask = (1 << shift_width) - 1;
 
-      pred_dir->config.two.xor = xor;
+      pred_dir->config.two.xor_ = xor_;
       pred_dir->config.two.shiftregs = calloc(l1size, sizeof(int));
       if (!pred_dir->config.two.shiftregs)
         fatal("cannot allocate shift register table");
@@ -320,7 +320,7 @@ bpred_dir_config(
     fprintf(stream,
       "pred_dir: %s: 2-lvl: %d l1-sz, %d bits/ent, %s xor, %d l2-sz, direct-mapped\n",
       name, pred_dir->config.two.l1size, pred_dir->config.two.shift_width,
-      pred_dir->config.two.xor ? "" : "no", pred_dir->config.two.l2size);
+      pred_dir->config.two.xor_ ? "" : "no", pred_dir->config.two.l2size);
     break;
 
   case BPred2bit:
@@ -554,7 +554,7 @@ bpred_dir_lookup(struct bpred_dir_t *pred_dir,  /* branch dir predictor inst */
         /* traverse 2-level tables */
         l1index = (baddr >> MD_BR_SHIFT) & (pred_dir->config.two.l1size - 1);
         l2index = pred_dir->config.two.shiftregs[l1index];
-        if (pred_dir->config.two.xor)
+        if (pred_dir->config.two.xor_)
           {
 #if 1
             /* this L2 index computation is more "compatible" to McFarling's

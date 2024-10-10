@@ -41,13 +41,15 @@
  *------------------------------------------------------------*/
 
 
+#include <stdlib.h>
 #include "def.h"
 
-
-
+int input_data(int, char *[], parameter_type *);
+void calculate_time(result_type*, parameter_type*);
+void output_data(result_type*, parameter_type*);
 /*------------------------------------------------------------------------------*/
       
-main(argc,argv)
+int main(argc,argv)
 int argc;
 char *argv[];
 {

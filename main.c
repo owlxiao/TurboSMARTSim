@@ -235,11 +235,11 @@ usage(FILE *fd, int argc, char **argv)
 }
 
 void regTimesStats(struct stat_sdb_t *sdb) {
-	ticksPerSecond = (float) CLK_TCK;
+	ticksPerSecond = (float) CLOCKS_PER_SEC;
 	stat_reg_uint(sdb, "totalTime", "total user and system time (clock ticks)", &totalTime,
 		totalTime, /* format */NULL);
 	stat_reg_float(sdb, "ticksPerSecond", "clock ticks per second", &ticksPerSecond,
-		(float) CLK_TCK, /* format */NULL);
+		(float) CLOCKS_PER_SEC, /* format */NULL);
 	stat_reg_formula(sdb, "totalSeconds", "total user and system time (secs)",
 		"totalTime / ticksPerSecond", /* format */NULL);
 }

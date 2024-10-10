@@ -152,7 +152,7 @@ fatal_hook(void (*hook_fn)(FILE *stream));	/* fatal hook function */
   _fatal(__FILE__, __FUNCTION__, __LINE__, fmt, ## args)
 
 void
-_fatal(char *file, char *func, int line, char *fmt, ...)
+_fatal(const char *file, const char *func, int line, const char *fmt, ...)
 __attribute__ ((noreturn));
 #else /* !__GNUC__ */
 void
@@ -165,7 +165,7 @@ fatal(char *fmt, ...);
   _panic(__FILE__, __FUNCTION__, __LINE__, fmt, ## args)
 
 void
-_panic(char *file, char *func, int line, char *fmt, ...)
+_panic(const char *file, const char *func, int line, const char *fmt, ...);
 __attribute__ ((noreturn));
 #else /* !__GNUC__ */
 void

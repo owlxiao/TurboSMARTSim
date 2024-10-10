@@ -37,6 +37,8 @@
 
 #include "asn.hpp"
 
+#include <iostream>
+
 
 static const long long kVersion = 2;
 
@@ -509,7 +511,8 @@ MemUpdate * MemUpdate::createFrom(unsigned char const * aBuffer) {
   length = read_length( aBuffer );
 
   update.theAddress = read_unsigned( aBuffer, ASN_UNSIGNED64 );
-  read_object( aBuffer, const_cast< u_char const *>(update.theData), update.theSize);
+  auto obj = const_cast< u_char const *>(update.theData);
+  read_object( aBuffer, obj, update.theSize);
 
   return &update;
 }

@@ -69,7 +69,7 @@ static const int Mb = 1024 * Kb;
 static const int kCompressBufferSize = 11 * Mb;
 static const int kCkptBufferSize = 10 * Mb;
 
-unsigned char gzbuffer[ kCompressBufferSize ] ;
+unsigned char gzbuffer_[ kCompressBufferSize ] ;
 
 void ckpt_connect_structures
   ( struct ckpt_state * state
@@ -183,9 +183,9 @@ void ckpt_write_header(ckpt_state * aWriter, char const * aBenchmark, int aU, in
   unsigned char * wrt = aWriter->theCkptBuffer;
 
   whdr.derWrite(wrt);
-  compress( gzbuffer, &compressed_size, aWriter->theCkptBuffer, size);
+  compress( gzbuffer_, &compressed_size, aWriter->theCkptBuffer, size);
   fwrite( &compressed_size, sizeof(unsigned long), 1, aWriter->theFile );
-  fwrite( gzbuffer, compressed_size, 1 ,aWriter->theFile);
+  fwrite( gzbuffer_, compressed_size, 1 ,aWriter->theFile);
 }
 
 
@@ -441,9 +441,9 @@ void ckpt_finish(counter_t anEndInsn) {
 
   theCurrentCkptState->theCkptEntry->derWrite(wrt);
 
-  compress( gzbuffer, &compressed_size, theCurrentCkptState->theCkptBuffer, size);
+  compress( gzbuffer_, &compressed_size, theCurrentCkptState->theCkptBuffer, size);
   fwrite( &compressed_size, sizeof(unsigned long), 1, theCurrentCkptState->theFile);
-  fwrite( gzbuffer, compressed_size, 1, theCurrentCkptState->theFile);
+  fwrite( gzbuffer_, compressed_size, 1, theCurrentCkptState->theFile);
 
 /*
   myfprintf(stderr, "End of checkpoint\n");
@@ -480,8 +480,8 @@ std::pair<unsigned long, unsigned long> asn_read(FILE * aFile, unsigned char * a
   unsigned long buf_size = aBufferSize;
 
   fread(&length, sizeof(unsigned long), 1, aFile);
-  fread(gzbuffer, length, 1, aFile);
-  uncompress(aBuffer, &buf_size, gzbuffer, length);
+  fread(gzbuffer_, length, 1, aFile);
+  uncompress(aBuffer, &buf_size, gzbuffer_, length);
   return std::make_pair(length, buf_size);
 }
 
@@ -711,7 +711,7 @@ void ckpt_skip_ckpts(ckpt_state * aReader, int aCount) {
 
   while (aCount > 0) {
     try {
-      if (gzeof(aReader->theFile)) {
+      if (feof(aReader->theFile)) {
         return;
       }
       asn_read(aReader->theFile, aReader->theCkptBuffer, aReader->theCkptBufferSize);

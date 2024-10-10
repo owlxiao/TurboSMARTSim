@@ -38,6 +38,7 @@
 #ifndef ASN_HPP
 #define ASN_HPP
 
+#include <cstring>
 #include <string>
 #include <list>
 #include <set>
@@ -60,8 +61,8 @@ struct ASNElement {
 
 struct CkptHeader : public ASNElement {
   static CkptHeader const * createFrom(unsigned char const * aBuffer);
-  void derWrite(unsigned char * & aBuffer) const;
-  int CkptHeader::contentLength() const;
+  void derWrite(unsigned char * & aBuffer) const override;
+  int contentLength() const override;
 
   std::string benchmark() const { return theBenchmark; }
   void setBenchmark(std::string const & aBenchmark) { theBenchmark = aBenchmark; }
@@ -150,6 +151,9 @@ struct ASNSequence {
   bool operator ==( ASNSequence const & aRHS) const {
     return theHead == aRHS.theHead;
   }
+  bool operator !=( ASNSequence const & aRHS) const {
+    return theHead != aRHS.theHead;
+  }
 
   u_char const * theHead;
   u_char const * theTail;
@@ -166,8 +170,11 @@ struct UpdateIter {
 
   unsigned long size() { return theUpdate.size(); }
 
-  bool operator ==( UpdateIter const & anIter) const {
+  bool operator==(UpdateIter const &anIter) const {
     return theUpdate == anIter.theUpdate;
+  }
+  bool operator!=(UpdateIter const &anIter) const {
+    return theUpdate != anIter.theUpdate;
   }
   const UpdateIter operator ++() {
     theUpdate = theUpdate.next();

@@ -144,7 +144,7 @@ char temp_cfg[8192];
 static counter_t sampling_k;
 
 /* sampling measurement unit */
-counter_t sampling_munit;
+static counter_t sampling_munit;
 counter_t ckpt_munit; //Not used in sim-mklvpt
 
 /* sampling measurement unit */

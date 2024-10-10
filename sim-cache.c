@@ -126,10 +126,10 @@ static counter_t sim_num_refs = 0;
 static unsigned int max_insts;
 
 /* level 1 instruction cache, entry level instruction cache */
-static struct cache_t *cache_il1 = NULL;
+struct cache_t *cache_il1 = NULL;
 
 /* level 1 instruction cache */
-static struct cache_t *cache_il2 = NULL;
+struct cache_t *cache_il2 = NULL;
 
 /* level 1 data cache, entry level data cache */
 struct cache_t *cache_dl1 = NULL;
@@ -138,10 +138,10 @@ struct cache_t *cache_dl1 = NULL;
 struct cache_t *cache_dl2 = NULL;
 
 /* instruction TLB */
-static struct cache_t *itlb = NULL;
+struct cache_t *itlb = NULL;
 
 /* data TLB */
-static struct cache_t *dtlb = NULL;
+struct cache_t *dtlb = NULL;
 
 /* text-based stat profiles */
 #define MAX_PCSTAT_VARS 8

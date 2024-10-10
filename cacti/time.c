@@ -40,6 +40,7 @@
  * SOFTWARE.
  *------------------------------------------------------------*/
 
+#include <stdio.h>
 #include <math.h>
 #include "def.h"
 
@@ -455,9 +456,7 @@ double inrisetime;
 /* Data array bitline: (see section 6.4 in tech report) */
 
 
-double bitline_delay(C,A,B,Ndwl,Ndbl,Nspd,inrisetime,outrisetime)
-int C,A,B,Ndbl,Nspd;
-double inrisetime,*outrisetime;
+double bitline_delay(int C,int A,int B,int Ndwl,int Ndbl, int Nspd,double inrisetime,double *outrisetime)
 {
         double Tbit,Cline,Ccolmux,Rlineb,r1,r2,c1,c2,a,b,c;
         double m,tstep;
@@ -514,7 +513,7 @@ double inrisetime,*outrisetime;
 
 
 double bitline_tag_delay(C,A,B,Ntwl,Ntbl,Ntspd,inrisetime,outrisetime)
-int C,A,B,Ntbl,Ntspd;
+int C,A,B,Ntwl,Ntbl,Ntspd;
 double inrisetime,*outrisetime;
 {
         double Tbit,Cline,Ccolmux,Rlineb,r1,r2,c1,c2,a,b,c;
