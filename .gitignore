@@ -1,3 +1,39 @@
 .vscode
 .cache
 compile_commands.json
+
+# SS Config
+config.h
+machine.h
+machine.c
+machine.def
+loader.c
+symbol.c
+syscall.c
+tests
+
+*.o
+*.a
+cacti/*.o
+cacti/*.a
+cacti/cacti
+
+# exe
+sysprobe
+sim-fast
+sim-safe
+sim-eio
+sim-bpred 
+sim-profile
+sim-cheetah
+sim-cache
+sim-outorder
+sim-mklvpt
+sim-oolvpt
+shuffle
+
+# results
+tests-alpha
+log 
+error
+
